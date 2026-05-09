@@ -113,9 +113,9 @@ export function Dashboard({ ocorrencias, fornecedores }: DashboardProps) {
       {/* Second Row: Rankings + Última Ocorrência */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Top Conferentes */}
-        <div className="rounded-lg border bg-card p-5 shadow-sm">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="h-8 w-8 rounded-lg bg-accent/20 flex items-center justify-center">
+        <div className="rounded-xl border bg-card p-5 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center gap-2 mb-4 pb-3 border-b">
+            <div className="h-8 w-8 rounded-lg bg-accent/20 ring-1 ring-accent/30 flex items-center justify-center">
               <svg className="h-4 w-4 text-accent-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
@@ -127,7 +127,7 @@ export function Dashboard({ ocorrencias, fornecedores }: DashboardProps) {
               {topConferentes.map(([nome, qtd], i) => (
                 <div key={nome} className="flex items-center gap-3">
                   <span className={`flex-shrink-0 h-6 w-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                    i === 0 ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+                    i === 0 ? "bg-gradient-to-br from-accent to-amber-500 text-accent-foreground shadow-sm" : "bg-muted text-muted-foreground"
                   }`}>
                     {i + 1}
                   </span>
@@ -137,14 +137,14 @@ export function Dashboard({ ocorrencias, fornecedores }: DashboardProps) {
               ))}
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground">Sem dados</p>
+            <p className="text-sm text-muted-foreground italic">Sem dados</p>
           )}
         </div>
 
         {/* Top Fornecedores */}
-        <div className="rounded-lg border bg-card p-5 shadow-sm">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="h-8 w-8 rounded-lg bg-destructive/10 flex items-center justify-center">
+        <div className="rounded-xl border bg-card p-5 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center gap-2 mb-4 pb-3 border-b">
+            <div className="h-8 w-8 rounded-lg bg-destructive/10 ring-1 ring-destructive/20 flex items-center justify-center">
               <svg className="h-4 w-4 text-destructive" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />
               </svg>
@@ -159,9 +159,9 @@ export function Dashboard({ ocorrencias, fornecedores }: DashboardProps) {
                     <span className="text-sm text-foreground truncate">{nome}</span>
                     <span className="text-xs font-bold text-muted-foreground ml-2">{qtd}</span>
                   </div>
-                  <div className="w-full h-2 rounded-full bg-muted">
+                  <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
                     <div
-                      className="h-full rounded-full bg-destructive/70 transition-all duration-500"
+                      className="h-full rounded-full bg-gradient-to-r from-destructive to-destructive/60 transition-all duration-700"
                       style={{ width: `${(qtd / maxFornecedorCount) * 100}%` }}
                     />
                   </div>
@@ -169,14 +169,14 @@ export function Dashboard({ ocorrencias, fornecedores }: DashboardProps) {
               ))}
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground">Sem dados</p>
+            <p className="text-sm text-muted-foreground italic">Sem dados</p>
           )}
         </div>
 
         {/* Última Ocorrência */}
-        <div className="rounded-lg border bg-card p-5 shadow-sm">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="h-8 w-8 rounded-lg bg-status-andamento/10 flex items-center justify-center">
+        <div className="rounded-xl border bg-card p-5 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center gap-2 mb-4 pb-3 border-b">
+            <div className="h-8 w-8 rounded-lg bg-status-andamento/10 ring-1 ring-status-andamento/20 flex items-center justify-center">
               <svg className="h-4 w-4 text-status-andamento" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -186,28 +186,28 @@ export function Dashboard({ ocorrencias, fornecedores }: DashboardProps) {
           {ultima ? (
             <div className="space-y-3">
               <div>
-                <p className="text-xs text-muted-foreground">Protocolo</p>
+                <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Protocolo</p>
                 <p className="text-sm font-mono font-medium text-foreground">{ultima.protocolo}</p>
               </div>
               <div>
-                <p className="text-xs text-muted-foreground">Fornecedor</p>
+                <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Fornecedor</p>
                 <p className="text-sm font-medium text-foreground">{ultima.fornecedorNome}</p>
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs text-muted-foreground">Status</p>
+                  <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Status</p>
                   <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold mt-0.5 ${statusClasses[ultima.status]}`}>
                     {ultima.status}
                   </span>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs text-muted-foreground">Data</p>
+                  <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Data</p>
                   <p className="text-sm font-medium text-foreground">{new Date(ultima.dataCriacao).toLocaleDateString("pt-BR")}</p>
                 </div>
               </div>
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground">Nenhuma ocorrência registrada.</p>
+            <p className="text-sm text-muted-foreground italic">Nenhuma ocorrência registrada.</p>
           )}
         </div>
       </div>

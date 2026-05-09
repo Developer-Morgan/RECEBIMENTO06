@@ -43,17 +43,19 @@ export function Dashboard({ ocorrencias, fornecedores }: DashboardProps) {
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total */}
-        <div className="rounded-lg border bg-card p-5 shadow-sm hover:shadow-md transition-shadow">
-          <div className="flex items-center justify-between mb-3">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Total de RNCs</p>
-            <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center">
+        <div className="group relative overflow-hidden rounded-xl border bg-gradient-to-br from-card to-card/80 p-5 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all">
+          <span className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-primary to-primary/40" />
+          <div className="absolute -top-10 -right-10 h-28 w-28 rounded-full bg-primary/5 blur-2xl group-hover:bg-primary/10 transition-colors" />
+          <div className="relative flex items-center justify-between mb-3">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Total de RNCs</p>
+            <div className="h-9 w-9 rounded-lg bg-primary/10 ring-1 ring-primary/20 flex items-center justify-center">
               <svg className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
           </div>
-          <p className="text-4xl font-extrabold text-foreground">{ocorrencias.length}</p>
-          <p className="text-xs text-muted-foreground mt-1">Ocorrências registradas</p>
+          <p className="relative text-4xl font-extrabold text-foreground tracking-tight">{ocorrencias.length}</p>
+          <p className="relative text-xs text-muted-foreground mt-1">Ocorrências registradas</p>
         </div>
 
         {/* Status breakdown */}
@@ -75,28 +77,30 @@ export function Dashboard({ ocorrencias, fornecedores }: DashboardProps) {
               </svg>
             ),
           };
-          const bgClass = status === "Pendente" ? "bg-status-pendente/10" : status === "Em Andamento" ? "bg-status-andamento/10" : "bg-status-resolvido/10";
+          const bgClass = status === "Pendente" ? "bg-status-pendente/10 ring-status-pendente/20" : status === "Em Andamento" ? "bg-status-andamento/10 ring-status-andamento/20" : "bg-status-resolvido/10 ring-status-resolvido/20";
           const textClass = status === "Pendente" ? "text-status-pendente" : status === "Em Andamento" ? "text-status-andamento" : "text-status-resolvido";
+          const barClass = status === "Pendente" ? "from-status-pendente to-status-pendente/60" : status === "Em Andamento" ? "from-status-andamento to-status-andamento/60" : "from-status-resolvido to-status-resolvido/60";
+          const blobClass = status === "Pendente" ? "bg-status-pendente/10" : status === "Em Andamento" ? "bg-status-andamento/10" : "bg-status-resolvido/10";
           const pct = ocorrencias.length > 0 ? Math.round((statusCount[status] / ocorrencias.length) * 100) : 0;
 
           return (
-            <div key={status} className="rounded-lg border bg-card p-5 shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{status}</p>
-                <div className={`h-9 w-9 rounded-lg ${bgClass} flex items-center justify-center ${textClass}`}>
+            <div key={status} className="group relative overflow-hidden rounded-xl border bg-gradient-to-br from-card to-card/80 p-5 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all">
+              <span className={`absolute left-0 top-0 h-full w-1 bg-gradient-to-b ${barClass}`} />
+              <div className={`absolute -top-10 -right-10 h-28 w-28 rounded-full blur-2xl opacity-60 ${blobClass}`} />
+              <div className="relative flex items-center justify-between mb-3">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">{status}</p>
+                <div className={`h-9 w-9 rounded-lg ring-1 ${bgClass} flex items-center justify-center ${textClass}`}>
                   {icons[status]}
                 </div>
               </div>
-              <p className="text-4xl font-extrabold text-foreground">{statusCount[status]}</p>
-              <div className="mt-2">
+              <p className="relative text-4xl font-extrabold text-foreground tracking-tight">{statusCount[status]}</p>
+              <div className="relative mt-2">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-xs text-muted-foreground">{pct}% do total</span>
                 </div>
-                <div className="w-full h-1.5 rounded-full bg-muted">
+                <div className="w-full h-1.5 rounded-full bg-muted overflow-hidden">
                   <div
-                    className={`h-full rounded-full transition-all duration-500 ${
-                      status === "Pendente" ? "bg-status-pendente" : status === "Em Andamento" ? "bg-status-andamento" : "bg-status-resolvido"
-                    }`}
+                    className={`h-full rounded-full bg-gradient-to-r ${barClass} transition-all duration-700`}
                     style={{ width: `${pct}%` }}
                   />
                 </div>

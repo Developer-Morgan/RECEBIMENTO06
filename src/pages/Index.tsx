@@ -249,16 +249,32 @@ const Index = () => {
 
       <main className="mx-auto max-w-7xl px-6 py-6 space-y-6">
         <div>
-          <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-            <div>
-              <h2 className="text-2xl font-extrabold text-foreground">Painel de Controle</h2>
-              <p className="text-sm text-muted-foreground">Visão geral do sistema de gestão de não conformidades</p>
-            </div>
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              {new Date().toLocaleDateString("pt-BR", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+          <div className="relative overflow-hidden rounded-xl border bg-gradient-to-br from-primary via-primary to-primary/90 p-5 mb-5 shadow-lg">
+            <div className="absolute inset-0 opacity-[0.08]" style={{
+              backgroundImage: "linear-gradient(hsl(var(--accent)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--accent)) 1px, transparent 1px)",
+              backgroundSize: "32px 32px",
+              maskImage: "radial-gradient(ellipse at right, black, transparent 70%)",
+              WebkitMaskImage: "radial-gradient(ellipse at right, black, transparent 70%)",
+            }} />
+            <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-accent/20 blur-3xl" />
+            <div className="relative flex items-center justify-between flex-wrap gap-3">
+              <div className="flex items-center gap-3">
+                <div className="h-11 w-11 rounded-lg bg-accent/20 ring-1 ring-accent/30 flex items-center justify-center">
+                  <svg className="h-5 w-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 17v-6h13M9 17H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v6M9 17l-3 3m0 0l-3-3m3 3V11" />
+                  </svg>
+                </div>
+                <div>
+                  <h2 className="text-xl font-extrabold text-primary-foreground tracking-tight">Painel de Controle</h2>
+                  <p className="text-xs text-primary-foreground/70">Visão geral do sistema de gestão de não conformidades</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 rounded-full border border-accent/30 bg-primary-foreground/5 px-3 py-1.5 text-xs text-primary-foreground/80 backdrop-blur-sm">
+                <svg className="h-3.5 w-3.5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                {new Date().toLocaleDateString("pt-BR", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+              </div>
             </div>
           </div>
           <Dashboard ocorrencias={ocorrencias} fornecedores={fornecedores} />

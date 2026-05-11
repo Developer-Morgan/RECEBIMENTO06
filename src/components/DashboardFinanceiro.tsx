@@ -47,8 +47,9 @@ export function DashboardFinanceiro({ ocorrencias: ocorrenciasProp }: DashboardF
   }, [ocorrencias]);
 
   const topMateriais = useMemo(() => {
+    const list = aplicarFiltro(periodoMat, statusMat);
     const map: Record<string, { qtd: number; valor: number }> = {};
-    ocorrencias.forEach((o) => {
+    list.forEach((o) => {
       o.materiais.forEach((m) => {
         const key = m.descricao || m.codigoAndra || "Sem descrição";
         if (!map[key]) map[key] = { qtd: 0, valor: 0 };
@@ -59,11 +60,13 @@ export function DashboardFinanceiro({ ocorrencias: ocorrenciasProp }: DashboardF
     return Object.entries(map)
       .sort((a, b) => b[1].valor - a[1].valor)
       .slice(0, 5);
-  }, [ocorrencias]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ocorrencias, periodoMat, statusMat]);
 
   const topMotivos = useMemo(() => {
+    const list = aplicarFiltro(periodoMot, statusMot);
     const map: Record<string, { count: number; valor: number }> = {};
-    ocorrencias.forEach((o) => {
+    list.forEach((o) => {
       o.materiais.forEach((m) => {
         const motivo = m.motivo || "Não informado";
         if (!map[motivo]) map[motivo] = { count: 0, valor: 0 };
@@ -72,9 +75,12 @@ export function DashboardFinanceiro({ ocorrencias: ocorrenciasProp }: DashboardF
       });
     });
     return Object.entries(map).sort((a, b) => b[1].valor - a[1].valor);
-  }, [ocorrencias]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ocorrencias, periodoMot, statusMot]);
 
-  const maxMotivoValor = topMotivos.length > 0 ? topMotivos[0][1].valor : 1;
+  const totalMateriais = topMateriais.reduce((acc, [, d]) => acc + d.valor, 0);
+  const totalMotivos = topMotivos.reduce((acc, [, d]) => acc + d.valor, 0);
+  const maxMateriaisValor = topMateriais.length > 0 ? topMateriais[0][1].valor : 1;
 
   const cards = [
     {

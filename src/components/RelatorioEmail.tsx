@@ -80,7 +80,7 @@ function gerarHTMLRelatorio(o: Ocorrencia, f?: Fornecedor): string {
   <tr><td style="background:#fffbeb;border-bottom:1px solid #fde68a;padding:12px 28px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
       <tr>
-        <td style="font-size:11px;color:#92400e;text-transform:uppercase;letter-spacing:0.6px;font-weight:700;">Protocolo Oficial</td>
+        <td style="font-size:11px;color:#92400e;text-transform:uppercase;letter-spacing:0.6px;font-weight:700;">Protocolo N° </td>
         <td style="text-align:right;font-size:14px;color:#1a1a1a;font-family:'Courier New',monospace;font-weight:800;letter-spacing:0.5px;">${o.protocolo}</td>
       </tr>
     </table>
@@ -90,8 +90,7 @@ function gerarHTMLRelatorio(o: Ocorrencia, f?: Fornecedor): string {
   <tr><td style="padding:22px 28px 6px;">
     <p style="margin:0 0 10px;font-size:13px;color:#111827;">Prezado(a) <strong>${o.fornecedorNome || "fornecedor"}</strong>,</p>
     <p style="margin:0;font-size:13px;color:#374151;line-height:1.6;">
-      Comunicamos formalmente a abertura do Registro de Não Conformidade <strong>${o.protocolo}</strong>, identificado durante o processo de conferência do recebimento referente à Nota Fiscal nº <strong>${o.notaFiscal || "—"}</strong>.
-      Solicitamos a análise das informações abaixo e o devido posicionamento, conforme nosso procedimento interno de tratamento de não conformidades.
+      Comunicamos  a abertura do Registro de Não Conformidade <strong>${o.protocolo}</strong>, identificado durante o processo de conferência do recebimento referente à Nota Fiscal nº <strong>${o.notaFiscal || "—"}</strong>.
     </p>
   </td></tr>
 

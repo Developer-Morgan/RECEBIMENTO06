@@ -23,7 +23,7 @@ export function DashboardFinanceiro({ ocorrencias: ocorrenciasProp }: DashboardF
       const dias = periodo === "7d" ? 7 : periodo === "30d" ? 30 : periodo === "90d" ? 90 : 365;
       const limite = Date.now() - dias * 86400000;
       list = list.filter((o) => {
-        const t = new Date(o.dataOcorrencia || o.dataAbertura || 0).getTime();
+        const t = new Date(o.dataCriacao || 0).getTime();
         return t >= limite;
       });
     }

@@ -11,123 +11,259 @@ interface RelatorioEmailProps {
 function gerarHTMLRelatorio(o: Ocorrencia, f?: Fornecedor): string {
   const cfg = loadConfig();
   const dataFormatada = new Date(o.dataCriacao).toLocaleDateString("pt-BR");
+  const horaFormatada = new Date(o.dataCriacao).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
   const statusBg =
     o.status === "Pendente" ? "#D4A017" :
-    o.status === "Resolvido" ? "#28a745" :
-    o.status === "Cancelado" ? "#dc3545" : "#007bff";
+    o.status === "Resolvido" ? "#16a34a" :
+    o.status === "Cancelado" ? "#dc2626" : "#2563eb";
 
-  // Tabela de materiais SEM colunas de valor (controle interno)
+  const totalItens = o.materiais.reduce((s, m) => s + (m.quantidade || 0), 0);
+  const motivosUnicos = Array.from(new Set(o.materiais.map((m) => m.motivo).filter(Boolean)));
+
+  // Linhas da tabela de materiais (sem valores financeiros)
   const materiaisRows = o.materiais.map((m, i) => `
-    <tr style="border-bottom:1px solid #ddd;">
-      <td style="padding:6px 10px;font-size:12px;">${i + 1}</td>
-      <td style="padding:6px 10px;font-size:12px;">${m.codigoAndra || "—"}</td>
-      <td style="padding:6px 10px;font-size:12px;">${m.codigoFornecedor || "—"}</td>
-      <td style="padding:6px 10px;font-size:12px;">${m.descricao || "—"}</td>
-      <td style="padding:6px 10px;font-size:12px;text-align:center;">${m.quantidade || 0}</td>
-      <td style="padding:6px 10px;font-size:12px;">${m.motivo || "—"}</td>
+    <tr style="border-bottom:1px solid #e5e7eb;${i % 2 === 1 ? "background:#fafafa;" : ""}">
+      <td style="padding:10px 12px;font-size:12px;color:#374151;text-align:center;font-weight:600;">${i + 1}</td>
+      <td style="padding:10px 12px;font-size:12px;color:#111827;font-family:'Courier New',monospace;font-weight:600;">${m.codigoAndra || "—"}</td>
+      <td style="padding:10px 12px;font-size:12px;color:#374151;font-family:'Courier New',monospace;">${m.codigoFornecedor || "—"}</td>
+      <td style="padding:10px 12px;font-size:12px;color:#111827;line-height:1.45;">${m.descricao || "—"}</td>
+      <td style="padding:10px 12px;font-size:13px;text-align:center;font-weight:700;color:#111827;">${m.quantidade || 0}</td>
+      <td style="padding:10px 12px;font-size:12px;"><span style="display:inline-block;background:#fef3c7;color:#92400e;padding:3px 8px;border-radius:10px;font-size:11px;font-weight:600;">${m.motivo || "—"}</span></td>
     </tr>
   `).join("");
 
   const embalagemTexto = o.embalagemLacrada
-    ? "Embalagem Lacrada Fornecedor [Não Manipulado]"
+    ? "Embalagem lacrada pelo fornecedor (não manipulada)"
     : o.embalagemAberta
-    ? "Embalagem Aberta / Manipulada"
+    ? "Embalagem aberta / manipulada"
     : "Não informado";
+  const embalagemIcone = o.embalagemLacrada ? "🔒" : o.embalagemAberta ? "📦" : "❔";
+
+  const sectionHeader = (titulo: string) => `
+    <tr><td style="padding:0;">
+      <div style="background:linear-gradient(90deg,#1a1a1a 0%,#2a2a2a 100%);color:#D4A017;padding:9px 16px;font-size:12px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;border-left:4px solid #D4A017;">
+        ${titulo}
+      </div>
+    </td></tr>`;
+
+  const infoRow = (label: string, value: string) => `
+    <p style="margin:0 0 8px;font-size:12px;color:#374151;line-height:1.5;">
+      <span style="color:#6b7280;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:0.4px;display:block;margin-bottom:2px;">${label}</span>
+      <span style="color:#111827;font-weight:600;">${value || "—"}</span>
+    </p>`;
 
   return `<!DOCTYPE html>
-<html><head><meta charset="utf-8"><title>RNC - ${o.protocolo}</title></head>
-<body style="margin:0;padding:20px;font-family:Arial,Helvetica,sans-serif;background:#f5f5f5;">
-<div style="max-width:900px;margin:0 auto;background:#fff;border:2px solid #1a1a1a;border-radius:6px;overflow:hidden;">
+<html><head><meta charset="utf-8"><title>RNC ${o.protocolo}</title></head>
+<body style="margin:0;padding:24px 12px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f3f4f6;color:#111827;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:920px;margin:0 auto;background:#ffffff;border-radius:10px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
 
-  <div style="background:#1a1a1a;padding:18px 25px;display:flex;align-items:center;gap:15px;">
-    <img src="${window.location.origin}/logo-50anos.png" style="height:60px;" alt="Andra 50 Anos" />
-    <div style="flex:1;text-align:center;">
-      <h1 style="margin:0;font-size:22px;color:#D4A017;font-weight:800;letter-spacing:0.5px;">Andra S.A. Electric Solutions</h1>
-      <p style="margin:4px 0 0;font-size:13px;color:#ccc;">Registro de Não Conformidade · 50 Anos de Tradição</p>
-    </div>
-  </div>
+  <!-- HEADER -->
+  <tr><td style="background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 60%,#2a2a2a 100%);padding:24px 28px;border-bottom:3px solid #D4A017;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td style="vertical-align:middle;width:80px;">
+          <img src="${window.location.origin}/logo-50anos.png" style="height:64px;display:block;" alt="Andra 50 Anos" />
+        </td>
+        <td style="vertical-align:middle;text-align:center;padding:0 12px;">
+          <h1 style="margin:0;font-size:22px;color:#D4A017;font-weight:800;letter-spacing:0.4px;">Andra S.A. Electric Solutions</h1>
+          <p style="margin:6px 0 0;font-size:12px;color:#d1d5db;letter-spacing:0.3px;">REGISTRO DE NÃO CONFORMIDADE — RECEBIMENTO DE MATERIAIS</p>
+          <p style="margin:3px 0 0;font-size:11px;color:#9ca3af;font-style:italic;">50 Anos de Excelência em Soluções Elétricas</p>
+        </td>
+        <td style="vertical-align:middle;width:90px;text-align:right;">
+          <div style="display:inline-block;background:${statusBg};color:#fff;padding:6px 12px;font-size:11px;font-weight:800;border-radius:14px;letter-spacing:0.6px;">${o.status.toUpperCase()}</div>
+        </td>
+      </tr>
+    </table>
+  </td></tr>
 
-  <div style="padding:20px 25px;">
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 15px;border:1px solid #ddd;margin-bottom:15px;border-radius:4px;">
-      <span style="font-size:13px;color:#333;"><strong>Protocolo:</strong> ${o.protocolo}</span>
-      <span style="background:${statusBg};color:#fff;padding:3px 12px;font-size:12px;font-weight:700;border-radius:3px;">${o.status.toUpperCase()}</span>
-    </div>
+  <!-- PROTOCOLO BAR -->
+  <tr><td style="background:#fffbeb;border-bottom:1px solid #fde68a;padding:12px 28px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td style="font-size:11px;color:#92400e;text-transform:uppercase;letter-spacing:0.6px;font-weight:700;">Protocolo Oficial</td>
+        <td style="text-align:right;font-size:14px;color:#1a1a1a;font-family:'Courier New',monospace;font-weight:800;letter-spacing:0.5px;">${o.protocolo}</td>
+      </tr>
+    </table>
+  </td></tr>
 
-    <div style="margin-bottom:15px;">
-      <div style="background:#1a1a1a;color:#D4A017;padding:6px 15px;font-size:13px;font-weight:700;">Informações do Fornecedor</div>
-      <div style="border:1px solid #ddd;border-top:none;padding:12px 15px;">
-        <table style="width:100%;border-collapse:collapse;">
+  <!-- SAUDAÇÃO -->
+  <tr><td style="padding:22px 28px 6px;">
+    <p style="margin:0 0 10px;font-size:13px;color:#111827;">Prezado(a) <strong>${o.fornecedorNome || "fornecedor"}</strong>,</p>
+    <p style="margin:0;font-size:13px;color:#374151;line-height:1.6;">
+      Comunicamos formalmente a abertura do Registro de Não Conformidade <strong>${o.protocolo}</strong>, identificado durante o processo de conferência do recebimento referente à Nota Fiscal nº <strong>${o.notaFiscal || "—"}</strong>.
+      Solicitamos a análise das informações abaixo e o devido posicionamento, conforme nosso procedimento interno de tratamento de não conformidades.
+    </p>
+  </td></tr>
+
+  <!-- RESUMO EXECUTIVO -->
+  <tr><td style="padding:18px 28px 4px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;border-left:4px solid #D4A017;">
+      <tr>
+        <td style="padding:14px 16px;border-right:1px solid #e5e7eb;text-align:center;width:25%;">
+          <div style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;">Itens não conformes</div>
+          <div style="font-size:22px;color:#1a1a1a;font-weight:800;margin-top:4px;">${o.materiais.length}</div>
+        </td>
+        <td style="padding:14px 16px;border-right:1px solid #e5e7eb;text-align:center;width:25%;">
+          <div style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;">Qtd. total</div>
+          <div style="font-size:22px;color:#1a1a1a;font-weight:800;margin-top:4px;">${totalItens}</div>
+        </td>
+        <td style="padding:14px 16px;border-right:1px solid #e5e7eb;text-align:center;width:25%;">
+          <div style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;">Abertura</div>
+          <div style="font-size:14px;color:#1a1a1a;font-weight:800;margin-top:6px;">${dataFormatada}</div>
+          <div style="font-size:11px;color:#6b7280;">${horaFormatada}</div>
+        </td>
+        <td style="padding:14px 16px;text-align:center;width:25%;">
+          <div style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;">Embalagem</div>
+          <div style="font-size:18px;margin-top:4px;">${embalagemIcone}</div>
+          <div style="font-size:10px;color:#374151;font-weight:600;">${o.embalagemLacrada ? "Lacrada" : o.embalagemAberta ? "Aberta" : "—"}</div>
+        </td>
+      </tr>
+    </table>
+  </td></tr>
+
+  <!-- INFORMAÇÕES -->
+  <tr><td style="padding:18px 28px 0;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">
+      ${sectionHeader("Dados do Fornecedor & Documento Fiscal")}
+      <tr><td style="padding:16px 18px;background:#fff;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
           <tr>
-            <td style="vertical-align:top;width:50%;padding:0 10px 0 0;">
-              <p style="margin:0 0 4px;font-size:12px;"><strong>Fornecedor:</strong> ${o.fornecedorNome || "—"}</p>
-              <p style="margin:0 0 4px;font-size:12px;"><strong>CNPJ:</strong> ${f?.cnpj || o.cnpj || "—"}</p>
-              <p style="margin:0 0 4px;font-size:12px;"><strong>Telefone:</strong> ${f?.telefone || "—"}</p>
-              <p style="margin:0 0 4px;font-size:12px;"><strong>E-mail:</strong> ${f?.email || "—"}</p>
-              <p style="margin:0;font-size:12px;"><strong>Chave de Acesso:</strong><br/>${o.chaveAcesso || "—"}</p>
+            <td style="vertical-align:top;width:50%;padding-right:14px;">
+              ${infoRow("Razão Social", o.fornecedorNome)}
+              ${infoRow("CNPJ", f?.cnpj || o.cnpj)}
+              ${infoRow("Telefone de Contato", f?.telefone || "")}
+              ${infoRow("E-mail", f?.email || "")}
             </td>
-            <td style="vertical-align:top;width:50%;padding:0 0 0 10px;">
-              <p style="margin:0 0 4px;font-size:12px;"><strong>Data de Abertura:</strong> ${dataFormatada}</p>
-              <p style="margin:0 0 4px;font-size:12px;"><strong>Nota Fiscal:</strong> ${o.notaFiscal || "—"}</p>
-              <p style="margin:0 0 4px;font-size:12px;"><strong>Série:</strong> ${o.serie || "—"}</p>
-              <p style="margin:0;font-size:12px;"><strong>Ordem de Compra | Pedido:</strong> ${o.ordemCompra || "—"}</p>
+            <td style="vertical-align:top;width:50%;padding-left:14px;border-left:1px solid #f3f4f6;">
+              ${infoRow("Data de Abertura", `${dataFormatada} às ${horaFormatada}`)}
+              ${infoRow("Nota Fiscal", o.notaFiscal)}
+              ${infoRow("Série", o.serie)}
+              ${infoRow("Ordem de Compra / Pedido", o.ordemCompra)}
+            </td>
+          </tr>
+          ${o.chaveAcesso ? `<tr><td colspan="2" style="padding-top:10px;border-top:1px solid #f3f4f6;">
+            <p style="margin:0;font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:0.4px;font-weight:700;">Chave de Acesso NF-e</p>
+            <p style="margin:4px 0 0;font-size:11px;color:#111827;font-family:'Courier New',monospace;word-break:break-all;background:#f9fafb;padding:6px 8px;border-radius:4px;border:1px solid #e5e7eb;">${o.chaveAcesso}</p>
+          </td></tr>` : ""}
+        </table>
+      </td></tr>
+    </table>
+  </td></tr>
+
+  <!-- MATERIAIS -->
+  <tr><td style="padding:14px 28px 0;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">
+      ${sectionHeader(`Materiais Não Conformes (${o.materiais.length})`)}
+      <tr><td style="padding:0;background:#fff;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+          <thead>
+            <tr style="background:#f3f4f6;border-bottom:2px solid #D4A017;">
+              <th style="padding:10px 12px;text-align:center;font-size:10px;font-weight:800;color:#374151;text-transform:uppercase;letter-spacing:0.5px;width:40px;">Nº</th>
+              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:800;color:#374151;text-transform:uppercase;letter-spacing:0.5px;">Cód. Andra</th>
+              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:800;color:#374151;text-transform:uppercase;letter-spacing:0.5px;">Cód. Fornecedor</th>
+              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:800;color:#374151;text-transform:uppercase;letter-spacing:0.5px;">Descrição</th>
+              <th style="padding:10px 12px;text-align:center;font-size:10px;font-weight:800;color:#374151;text-transform:uppercase;letter-spacing:0.5px;width:60px;">Qtd.</th>
+              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:800;color:#374151;text-transform:uppercase;letter-spacing:0.5px;">Motivo</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${materiaisRows || '<tr><td colspan="6" style="padding:14px;text-align:center;font-size:12px;color:#9ca3af;">Nenhum material registrado</td></tr>'}
+          </tbody>
+        </table>
+      </td></tr>
+    </table>
+  </td></tr>
+
+  <!-- DESCRIÇÃO -->
+  <tr><td style="padding:14px 28px 0;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">
+      ${sectionHeader("Descrição Técnica da Ocorrência")}
+      <tr><td style="padding:16px 18px;background:#fff;">
+        <p style="margin:0 0 14px;font-size:13px;color:#111827;line-height:1.7;text-align:justify;">${(o.descricao || "Sem descrição.").replace(/\n/g, "<br/>")}</p>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #f3f4f6;padding-top:10px;margin-top:10px;">
+          <tr>
+            <td style="padding-top:10px;font-size:11px;color:#6b7280;">
+              <strong style="color:#374151;">Conferente Responsável:</strong>
+              <span style="color:#111827;font-weight:700;">${o.conferente || "—"}</span>
+            </td>
+            <td style="padding-top:10px;font-size:11px;color:#6b7280;text-align:right;">
+              <strong style="color:#374151;">Status da embalagem:</strong>
+              <span style="color:#111827;font-weight:600;">${embalagemTexto}</span>
+            </td>
+          </tr>
+          ${motivosUnicos.length > 0 ? `<tr><td colspan="2" style="padding-top:10px;font-size:11px;color:#6b7280;">
+            <strong style="color:#374151;">Motivos identificados:</strong>
+            ${motivosUnicos.map((m) => `<span style="display:inline-block;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;margin:2px 3px 0 0;">${m}</span>`).join("")}
+          </td></tr>` : ""}
+        </table>
+      </td></tr>
+    </table>
+  </td></tr>
+
+  <!-- AÇÃO REQUERIDA -->
+  <tr><td style="padding:14px 28px 0;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fffbeb;border:1px solid #fde68a;border-left:4px solid #D4A017;border-radius:8px;">
+      <tr><td style="padding:16px 18px;">
+        <p style="margin:0 0 6px;font-size:12px;color:#92400e;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;">⚠ Ação Requerida</p>
+        <p style="margin:0;font-size:12px;color:#374151;line-height:1.6;">
+          Solicitamos formalmente o retorno com o plano de ação corretiva (substituição, devolução, nota de crédito ou ajuste contábil) no prazo abaixo,
+          conforme a complexidade do caso. Toda a tratativa deve ser respondida em resposta a este e-mail, mantendo o protocolo no assunto.
+        </p>
+      </td></tr>
+    </table>
+  </td></tr>
+
+  <!-- PRAZOS -->
+  <tr><td style="padding:14px 28px 0;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">
+      ${sectionHeader("Prazos Médios para Tratativa (SLA)")}
+      <tr><td style="padding:0;background:#fff;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td style="padding:14px;text-align:center;border-right:1px solid #f3f4f6;width:33%;">
+              <div style="display:inline-block;background:#dcfce7;color:#166534;padding:4px 10px;border-radius:10px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;">Simples</div>
+              <div style="margin-top:8px;font-size:16px;font-weight:800;color:#111827;">1 a 5</div>
+              <div style="font-size:10px;color:#6b7280;text-transform:uppercase;">dias úteis</div>
+            </td>
+            <td style="padding:14px;text-align:center;border-right:1px solid #f3f4f6;width:33%;">
+              <div style="display:inline-block;background:#fef3c7;color:#92400e;padding:4px 10px;border-radius:10px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;">Moderada</div>
+              <div style="margin-top:8px;font-size:16px;font-weight:800;color:#111827;">3 a 8</div>
+              <div style="font-size:10px;color:#6b7280;text-transform:uppercase;">dias úteis</div>
+            </td>
+            <td style="padding:14px;text-align:center;width:33%;">
+              <div style="display:inline-block;background:#fee2e2;color:#991b1b;padding:4px 10px;border-radius:10px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;">Complexa</div>
+              <div style="margin-top:8px;font-size:16px;font-weight:800;color:#111827;">5 a 10+</div>
+              <div style="font-size:10px;color:#6b7280;text-transform:uppercase;">dias úteis</div>
             </td>
           </tr>
         </table>
-      </div>
-    </div>
+      </td></tr>
+    </table>
+  </td></tr>
 
-    <div style="margin-bottom:15px;">
-      <div style="background:#1a1a1a;color:#D4A017;padding:6px 15px;font-size:13px;font-weight:700;">Materiais Não Conformes</div>
-      <table style="width:100%;border-collapse:collapse;border:1px solid #ddd;">
-        <thead>
-          <tr style="background:#f0f0f0;border-bottom:2px solid #ddd;">
-            <th style="padding:6px 10px;text-align:left;font-size:12px;font-weight:700;">Nº</th>
-            <th style="padding:6px 10px;text-align:left;font-size:12px;font-weight:700;">Cód. Andra</th>
-            <th style="padding:6px 10px;text-align:left;font-size:12px;font-weight:700;">Cód. Fornecedor</th>
-            <th style="padding:6px 10px;text-align:left;font-size:12px;font-weight:700;">Descrição</th>
-            <th style="padding:6px 10px;text-align:center;font-size:12px;font-weight:700;">Qtd.</th>
-            <th style="padding:6px 10px;text-align:left;font-size:12px;font-weight:700;">Motivo</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${materiaisRows || '<tr><td colspan="6" style="padding:10px;text-align:center;font-size:12px;color:#999;">Nenhum material registrado</td></tr>'}
-        </tbody>
-      </table>
-    </div>
+  <!-- ASSINATURA -->
+  <tr><td style="padding:24px 28px 22px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:2px solid #1a1a1a;padding-top:14px;">
+      <tr><td style="padding-top:14px;">
+        <p style="margin:0 0 10px;font-size:12px;color:#374151;">Atenciosamente,</p>
+        <p style="margin:0;font-size:13px;color:#111827;font-weight:800;">${cfg.remetenteNome}</p>
+        <p style="margin:2px 0 0;font-size:11px;color:#6b7280;">${cfg.remetenteCargo} · ${cfg.remetenteEmpresa}</p>
+        <p style="margin:8px 0 0;font-size:11px;">
+          <a href="http://${cfg.remetenteSite}" style="color:#D4A017;text-decoration:none;font-weight:700;">${cfg.remetenteSite}</a>
+        </p>
+      </td></tr>
+    </table>
+  </td></tr>
 
-    <div style="margin-bottom:15px;">
-      <div style="background:#1a1a1a;color:#D4A017;padding:6px 15px;font-size:13px;font-weight:700;">Status da Embalagem</div>
-      <div style="border:1px solid #ddd;border-top:none;padding:10px 15px;font-size:12px;">${embalagemTexto}</div>
-    </div>
+  <!-- RODAPÉ -->
+  <tr><td style="background:#0a0a0a;padding:14px 28px;text-align:center;">
+    <p style="margin:0;font-size:10px;color:#9ca3af;letter-spacing:0.4px;">
+      Documento gerado automaticamente pelo Sistema de RNC Andra · Protocolo <strong style="color:#D4A017;">${o.protocolo}</strong>
+    </p>
+    <p style="margin:4px 0 0;font-size:9px;color:#6b7280;">Esta comunicação é confidencial e destinada exclusivamente ao fornecedor mencionado.</p>
+  </td></tr>
 
-    <div style="margin-bottom:15px;">
-      <div style="background:#1a1a1a;color:#D4A017;padding:6px 15px;font-size:13px;font-weight:700;">Descrição da Ocorrência</div>
-      <div style="border:1px solid #ddd;border-top:none;padding:12px 15px;">
-        <p style="margin:0 0 10px;font-size:12px;line-height:1.6;">${(o.descricao || "Sem descrição.").replace(/\n/g, "<br/>")}</p>
-        <p style="margin:0;font-size:12px;"><strong>Conferente Responsável:</strong> ${o.conferente || "—"}</p>
-      </div>
-    </div>
-
-    <div style="margin-bottom:20px;">
-      <div style="background:#1a1a1a;color:#D4A017;padding:6px 15px;font-size:13px;font-weight:700;">Prazos Médios para Solução</div>
-      <div style="border:1px solid #ddd;border-top:none;padding:12px 15px;font-size:12px;line-height:1.8;">
-        <ul style="margin:0;padding-left:20px;">
-          <li><strong>Simples:</strong> 1 a 5 dias úteis</li>
-          <li><strong>Moderadas:</strong> 3 a 8 dias úteis</li>
-          <li><strong>Complexas:</strong> 5 a 10 dias úteis ou mais</li>
-        </ul>
-      </div>
-    </div>
-
-    <div style="border-top:1px solid #ddd;padding-top:15px;font-size:11px;color:#666;line-height:1.6;">
-      <p style="margin:0;">Atenciosamente,</p>
-      <p style="margin:8px 0 0;"><strong>${cfg.remetenteNome}</strong><br/>
-      ${cfg.remetenteCargo}<br/>
-      ${cfg.remetenteEmpresa}<br/>
-      <a href="http://${cfg.remetenteSite}" style="color:#D4A017;text-decoration:none;">${cfg.remetenteSite}</a></p>
-    </div>
-  </div>
-</div>
+</table>
 </body></html>`;
 }
 

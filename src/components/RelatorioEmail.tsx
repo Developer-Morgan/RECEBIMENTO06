@@ -208,13 +208,10 @@ function gerarHTMLRelatorio(o: Ocorrencia, f?: Fornecedor): string {
         <p style="margin:0;font-size:12px;color:#374151;line-height:1.6;">
          Solicitamos o retorno com o plano de ação para tratativa da divergência identificada, podendo contemplar uma das seguintes alternativas de solução:
 
-* **Reposição do material correto**, em substituição ao item divergente;
-* **Devolução do material com divergência**, para regularização do processo;
-* **Emissão de nota de crédito**, quando aplicável;
-* **Ajuste contábil**, caso necessário.
-
+* **Reposição do material correto**, em substituição ao item divergente.
+* **Devolução do material com divergência**, para regularização do processo.
+* **Emissão de nota de crédito**, quando aplicável.
 Pedimos que o posicionamento seja enviado dentro do prazo estabelecido, conforme a complexidade do caso.
-
 Toda a tratativa deverá ser respondida diretamente a este e-mail, mantendo o número do protocolo no assunto, para garantir o correto acompanhamento do processo.
 
         </p>

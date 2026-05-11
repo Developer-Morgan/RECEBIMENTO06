@@ -200,20 +200,52 @@ function gerarHTMLRelatorio(o: Ocorrencia, f?: Fornecedor): string {
     </table>
   </td></tr>
 
-  <!-- AÇÃO REQUERIDA -->
-  <tr><td style="padding:14px 28px 0;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fffbeb;border:1px solid #fde68a;border-left:4px solid #D4A017;border-radius:8px;">
-      <tr><td style="padding:16px 18px;">
-        <p style="margin:0 0 6px;font-size:12px;color:#92400e;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;">⚠ Ação Requerida</p>
-        <p style="margin:0;font-size:12px;color:#374151;line-height:1.6;">
-         Solicitamos o retorno com o plano de ação para tratativa da divergência identificada, podendo contemplar uma das seguintes alternativas de solução:
+ {/* AÇÃO REQUERIDA */}
+<tr><td style="padding:14px 28px 0;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fffbeb;border:1px solid #fde68a;border-left:4px solid #D4A017;border-radius:8px;">
+    <tr><td style="padding:16px 18px;">
 
-* **Reposição do material correto**, em substituição ao item divergente.
-* **Devolução do material com divergência**, para regularização do processo.
-* **Emissão de nota de crédito**, quando aplicável.
-Pedimos que o posicionamento seja enviado dentro do prazo estabelecido, conforme a complexidade do caso.
-Toda a tratativa deverá ser respondida diretamente a este e-mail, mantendo o número do protocolo no assunto, para garantir o correto acompanhamento do processo.
+      <p style="margin:0 0 8px;font-size:12px;color:#92400e;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;">
+        ⚠ Ação Requerida
+      </p>
 
+      <p style="margin:0 0 12px;font-size:12px;color:#374151;line-height:1.7;">
+        Solicitamos o retorno com o plano de ação para tratativa da divergência identificada, podendo contemplar uma das seguintes alternativas de solução:
+      </p>
+
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:10px 0 14px;border-collapse:collapse;">
+
+        <tr>
+          <td style="padding:10px 12px;border:1px solid #fde68a;border-left:4px solid #D4A017;background:#ffffff;font-size:12px;color:#111827;border-radius:6px;">
+            <strong style="color:#92400e;">Reposição do material correto</strong><br/>
+            Em substituição ao item divergente.
+          </td>
+        </tr>
+
+        <tr>
+          <td style="height:8px;"></td>
+        </tr>
+
+        <tr>
+          <td style="padding:10px 12px;border:1px solid #fde68a;border-left:4px solid #D4A017;background:#ffffff;font-size:12px;color:#111827;border-radius:6px;">
+            <strong style="color:#92400e;">Devolução do material com divergência</strong><br/>
+            Para regularização do processo.
+          </td>
+        </tr>
+
+      </table>
+
+      <p style="margin:0 0 10px;font-size:12px;color:#374151;line-height:1.7;">
+        Pedimos que o posicionamento seja enviado dentro do prazo estabelecido, conforme a complexidade do caso.
+      </p>
+
+      <p style="margin:0;font-size:12px;color:#374151;line-height:1.7;">
+        Toda a tratativa deverá ser respondida diretamente a este e-mail, mantendo o número do protocolo no assunto, para garantir o correto acompanhamento do processo.
+      </p>
+
+    </td></tr>
+  </table>
+</td></tr>
         </p>
       </td></tr>
     </table>

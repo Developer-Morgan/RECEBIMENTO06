@@ -1,11 +1,36 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Ocorrencia, formatarMoeda, calcularValorTotal } from "@/lib/rnc-types";
 
 interface DashboardFinanceiroProps {
   ocorrencias: Ocorrencia[];
 }
 
-export function DashboardFinanceiro({ ocorrencias }: DashboardFinanceiroProps) {
+type PeriodoFiltro = "todos" | "7d" | "30d" | "90d" | "ano";
+type StatusFiltro = "todos" | "Pendente" | "Em Andamento" | "Resolvido" | "Cancelado";
+
+export function DashboardFinanceiro({ ocorrencias: ocorrenciasProp }: DashboardFinanceiroProps) {
+  const [showFiltroMat, setShowFiltroMat] = useState(false);
+  const [showFiltroMot, setShowFiltroMot] = useState(false);
+  const [periodoMat, setPeriodoMat] = useState<PeriodoFiltro>("todos");
+  const [statusMat, setStatusMat] = useState<StatusFiltro>("todos");
+  const [periodoMot, setPeriodoMot] = useState<PeriodoFiltro>("todos");
+  const [statusMot, setStatusMot] = useState<StatusFiltro>("todos");
+
+  function aplicarFiltro(periodo: PeriodoFiltro, status: StatusFiltro) {
+    let list = ocorrenciasProp;
+    if (status !== "todos") list = list.filter((o) => o.status === status);
+    if (periodo !== "todos") {
+      const dias = periodo === "7d" ? 7 : periodo === "30d" ? 30 : periodo === "90d" ? 90 : 365;
+      const limite = Date.now() - dias * 86400000;
+      list = list.filter((o) => {
+        const t = new Date(o.dataOcorrencia || o.dataAbertura || 0).getTime();
+        return t >= limite;
+      });
+    }
+    return list;
+  }
+
+  const ocorrencias = ocorrenciasProp;
   const stats = useMemo(() => {
     const resolvidas = ocorrencias.filter((o) => o.status === "Resolvido");
     const pendentes = ocorrencias.filter((o) => o.status === "Pendente");

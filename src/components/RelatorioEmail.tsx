@@ -94,31 +94,7 @@ function gerarHTMLRelatorio(o: Ocorrencia, f?: Fornecedor): string {
     </p>
   </td></tr>
 
-  <!-- RESUMO EXECUTIVO -->
-  <tr><td style="padding:18px 28px 4px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;border-left:4px solid #D4A017;">
-      <tr>
-        <td style="padding:14px 16px;border-right:1px solid #e5e7eb;text-align:center;width:25%;">
-          <div style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;">Itens não conformes</div>
-          <div style="font-size:22px;color:#1a1a1a;font-weight:800;margin-top:4px;">${o.materiais.length}</div>
-        </td>
-        <td style="padding:14px 16px;border-right:1px solid #e5e7eb;text-align:center;width:25%;">
-          <div style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;">Qtd. total</div>
-          <div style="font-size:22px;color:#1a1a1a;font-weight:800;margin-top:4px;">${totalItens}</div>
-        </td>
-        <td style="padding:14px 16px;border-right:1px solid #e5e7eb;text-align:center;width:25%;">
-          <div style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;">Abertura</div>
-          <div style="font-size:14px;color:#1a1a1a;font-weight:800;margin-top:6px;">${dataFormatada}</div>
-          <div style="font-size:11px;color:#6b7280;">${horaFormatada}</div>
-        </td>
-        <td style="padding:14px 16px;text-align:center;width:25%;">
-          <div style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;">Embalagem</div>
-          <div style="font-size:18px;margin-top:4px;">${embalagemIcone}</div>
-          <div style="font-size:10px;color:#374151;font-weight:600;">${o.embalagemLacrada ? "Lacrada" : o.embalagemAberta ? "Aberta" : "—"}</div>
-        </td>
-      </tr>
-    </table>
-  </td></tr>
+
 
   <!-- INFORMAÇÕES -->
   <tr><td style="padding:18px 28px 0;">

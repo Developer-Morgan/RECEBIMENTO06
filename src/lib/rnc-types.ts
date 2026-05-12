@@ -91,6 +91,10 @@ export interface AppConfig {
   ccNovaRNC?: string[];
   /** E-mails destinatários do Relatório Diário de ocorrências */
   ccRelatorio?: string[];
+  /** E-mails destinatários dos alertas de atraso de transferência */
+  ccAtrasoTransferencia?: string[];
+  /** Mensagem padrão usada no alerta de atraso de transferência */
+  mensagemPadraoAtraso?: string;
   /** Tema visual do sistema */
   tema?: "claro" | "escuro" | "dourado";
 }

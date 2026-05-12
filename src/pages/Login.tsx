@@ -72,15 +72,14 @@ export default function Login() {
               Gestão de Não Conformidades · 50 Anos
             </p>
             <p className="mt-6 max-w-md mx-auto lg:mx-0 text-sm text-primary-foreground/70 leading-relaxed">
-              Plataforma profissional para registro, acompanhamento e análise de
-              não conformidades de fornecedores. Construída com a tradição de meio
-              século da Andra Materiais Elétricos.
+              Plataforma para registro, acompanhamento e análise de
+              não conformidades de fornecedores.
             </p>
 
             <div className="mt-10 grid grid-cols-3 gap-3 max-w-md mx-auto lg:mx-0">
               {[
                 { label: "Anos", value: "50", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V6m0 12v-2" },
-                { label: "Offline", value: "100%", icon: "M5 13l4 4L19 7" },
+                { label: "Sheets", value: "Google ", icon: "M5 13l4 4L19 7" },
                 { label: "Seguro", value: "✓", icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" },
               ].map((b) => (
                 <div
@@ -229,11 +228,9 @@ export default function Login() {
                     <svg className="h-3.5 w-3.5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    Acesso inicial
+                    
                   </p>
                   <p className="mt-1 text-muted-foreground">
-                    Usuário: <code className="font-mono font-bold text-accent-foreground bg-accent/30 px-1 rounded">admin</code>{" "}
-                    · Senha: <code className="font-mono font-bold text-accent-foreground bg-accent/30 px-1 rounded">admin</code>
                   </p>
                   <p className="mt-1 text-muted-foreground">
                     Altere a senha no painel administrativo após o primeiro acesso.

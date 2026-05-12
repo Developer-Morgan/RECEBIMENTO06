@@ -50,6 +50,8 @@ export interface Ocorrencia {
   dataResolucao?: string;
   /** Total de dias que a ocorrência ficou em aberto (preenchido ao resolver) */
   diasEmAberto?: number;
+  /** Define se os valores desta ocorrência devem ser contabilizados no painel financeiro (padrão true) */
+  contabilizarValores?: boolean;
 }
 
 /** Calcula quantos dias uma ocorrência está/ficou em aberto */

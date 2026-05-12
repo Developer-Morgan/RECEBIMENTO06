@@ -1,5 +1,7 @@
 export type Status = "Pendente" | "Em Andamento" | "Resolvido" | "Cancelado";
 
+export type TipoFornecedor = "fornecedor" | "transferencia" | "ambos";
+
 export interface Fornecedor {
   id: string;
   nome: string;
@@ -10,6 +12,8 @@ export interface Fornecedor {
   contato?: string;
   observacoes?: string;
   dataCadastro?: string;
+  /** Define se é fornecedor externo, origem de transferência interna ou ambos */
+  tipo?: TipoFornecedor;
 }
 
 export interface MaterialNaoConforme {
@@ -46,6 +50,8 @@ export interface Ocorrencia {
   dataResolucao?: string;
   /** Total de dias que a ocorrência ficou em aberto (preenchido ao resolver) */
   diasEmAberto?: number;
+  /** Define se os valores desta ocorrência devem ser contabilizados no painel financeiro (padrão true) */
+  contabilizarValores?: boolean;
 }
 
 /** Calcula quantos dias uma ocorrência está/ficou em aberto */
@@ -85,6 +91,10 @@ export interface AppConfig {
   ccNovaRNC?: string[];
   /** E-mails destinatários do Relatório Diário de ocorrências */
   ccRelatorio?: string[];
+  /** E-mails destinatários dos alertas de atraso de transferência */
+  ccAtrasoTransferencia?: string[];
+  /** Mensagem padrão usada no alerta de atraso de transferência */
+  mensagemPadraoAtraso?: string;
   /** Tema visual do sistema */
   tema?: "claro" | "escuro" | "dourado";
 }
@@ -184,6 +194,14 @@ export function loadMotivos(): string[] {
 }
 export function saveMotivos(d: string[]) { save("rnc_motivos", d); }
 
+const DEFAULT_MENSAGEM_ATRASO = `Prezados,
+
+Comunicamos que a transferência prevista para hoje sofreu atraso e ainda não foi recebida em nosso centro de distribuição. Solicitamos posicionamento urgente quanto à previsão de chegada e justificativa do atraso, para que possamos reorganizar a operação interna e mitigar impactos no recebimento e separação de pedidos.
+
+Pedimos a gentileza de retornar este e-mail com as informações o quanto antes.
+
+Atenciosamente,`;
+
 const DEFAULT_CONFIG: AppConfig = {
   remetenteNome: "Charles S Silva",
   remetenteCargo: "Encarregado de Logística",
@@ -192,6 +210,8 @@ const DEFAULT_CONFIG: AppConfig = {
   destinatarioPadrao: "",
   ccNovaRNC: [],
   ccRelatorio: [],
+  ccAtrasoTransferencia: [],
+  mensagemPadraoAtraso: DEFAULT_MENSAGEM_ATRASO,
   tema: "claro",
 };
 export function loadConfig(): AppConfig { return { ...DEFAULT_CONFIG, ...load<Partial<AppConfig>>("rnc_config", {}) }; }

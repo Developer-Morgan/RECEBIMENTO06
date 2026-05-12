@@ -1,5 +1,7 @@
 export type Status = "Pendente" | "Em Andamento" | "Resolvido" | "Cancelado";
 
+export type TipoFornecedor = "fornecedor" | "transferencia" | "ambos";
+
 export interface Fornecedor {
   id: string;
   nome: string;
@@ -10,6 +12,8 @@ export interface Fornecedor {
   contato?: string;
   observacoes?: string;
   dataCadastro?: string;
+  /** Define se é fornecedor externo, origem de transferência interna ou ambos */
+  tipo?: TipoFornecedor;
 }
 
 export interface MaterialNaoConforme {

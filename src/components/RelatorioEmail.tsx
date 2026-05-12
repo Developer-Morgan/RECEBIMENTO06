@@ -208,7 +208,7 @@ function gerarHTMLRelatorio(o: Ocorrencia, f?: Fornecedor): string {
           </td>
         </tr>
 
-      </p>
+        </p>
       </td></tr>
     </table>
   </td></tr>

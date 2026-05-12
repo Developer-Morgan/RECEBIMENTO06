@@ -194,6 +194,14 @@ export function loadMotivos(): string[] {
 }
 export function saveMotivos(d: string[]) { save("rnc_motivos", d); }
 
+const DEFAULT_MENSAGEM_ATRASO = `Prezados,
+
+Comunicamos que a transferência prevista para hoje sofreu atraso e ainda não foi recebida em nosso centro de distribuição. Solicitamos posicionamento urgente quanto à previsão de chegada e justificativa do atraso, para que possamos reorganizar a operação interna e mitigar impactos no recebimento e separação de pedidos.
+
+Pedimos a gentileza de retornar este e-mail com as informações o quanto antes.
+
+Atenciosamente,`;
+
 const DEFAULT_CONFIG: AppConfig = {
   remetenteNome: "Charles S Silva",
   remetenteCargo: "Encarregado de Logística",
@@ -202,6 +210,8 @@ const DEFAULT_CONFIG: AppConfig = {
   destinatarioPadrao: "",
   ccNovaRNC: [],
   ccRelatorio: [],
+  ccAtrasoTransferencia: [],
+  mensagemPadraoAtraso: DEFAULT_MENSAGEM_ATRASO,
   tema: "claro",
 };
 export function loadConfig(): AppConfig { return { ...DEFAULT_CONFIG, ...load<Partial<AppConfig>>("rnc_config", {}) }; }

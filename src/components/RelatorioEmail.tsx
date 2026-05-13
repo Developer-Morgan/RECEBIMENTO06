@@ -95,7 +95,7 @@ function gerarHTMLRelatorio(o: Ocorrencia, f?: Fornecedor): string {
 
   return `<!DOCTYPE html>
 <html lang="pt-BR">
-<head><meta charset="UTF-8" /><title>RNC ${escapeHtml(o.protocolo)}</title></head>
+<!--<head><meta charset="UTF-8" /><title>RNC ${escapeHtml(o.protocolo)}</title></head> -->
 <body style="margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;color:#1a1a1a;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f5f5f5;padding:20px 0;">
   <tr><td align="center">

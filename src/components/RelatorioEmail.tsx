@@ -200,30 +200,283 @@ function gerarHTMLRelatorio(o: Ocorrencia, f?: Fornecedor): string {
     </table>
   </td></tr>
 
-  <!-- AÇÃO REQUERIDA -->
-  <tr><td style="padding:14px 28px 0;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fffbeb;border:1px solid #fde68a;border-left:4px solid #D4A017;border-radius:8px;">
-      <tr><td style="padding:16px 18px;">
-        <p style="margin:0 0 6px;font-size:12px;color:#92400e;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;">⚠ Ação Requerida</p>
-        <p style="margin:0;font-size:12px;color:#374151;line-height:1.6;">
-         Solicitamos o retorno com o plano de ação para tratativa da divergência identificada, podendo contemplar uma das seguintes alternativas de solução:
+<!-- AÇÃO REQUERIDA -->
+<tr>
+  <td style="padding:14px 28px 0;">
+    <table
+      role="presentation"
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      style="
+        background:#fffbeb;
+        border:1px solid #fde68a;
+        border-left:4px solid #D4A017;
+        border-radius:8px;
+      "
+    >
+      <tr>
+        <td style="padding:16px 18px;">
 
-* **Reposição do material correto**, em substituição ao item divergente;
-* **Devolução do material com divergência**, para regularização do processo;
-* **Emissão de nota de crédito**, quando aplicável;
-* **Ajuste contábil**, caso necessário.
+          <p style="
+            margin:0 0 12px;
+            font-size:12px;
+            color:#92400e;
+            font-weight:800;
+            text-transform:uppercase;
+            letter-spacing:0.5px;
+          ">
+            ⚠ Ação Requerida
+          </p>
 
-* **Reposição do material correto**, em substituição ao item divergente.
-* **Devolução do material com divergência**, para regularização do processo.
-* **Emissão de nota de crédito**, quando aplicável.
-Pedimos que o posicionamento seja enviado dentro do prazo estabelecido, conforme a complexidade do caso.
+          <p style="
+            margin:0 0 14px;
+            font-size:12px;
+            color:#374151;
+            line-height:1.7;
+          ">
+            Solicitamos o retorno com o plano de ação para tratativa da divergência identificada,
+            podendo contemplar uma das seguintes alternativas:
+          </p>
 
-Toda a tratativa deverá ser respondida diretamente a este e-mail, mantendo o número do protocolo no assunto, para garantir o correto acompanhamento do processo.
+          <!-- OPÇÕES -->
+          <table
+            role="presentation"
+            width="100%"
+            cellpadding="0"
+            cellspacing="0"
+            style="
+              border-collapse:separate;
+              margin-bottom:16px;
+            "
+          >
 
-        </p>
-      </td></tr>
+            <!-- ITEM -->
+            <tr>
+              <td style="
+                padding:0 0 10px 0;
+              ">
+                <table
+                  role="presentation"
+                  width="100%"
+                  cellpadding="0"
+                  cellspacing="0"
+                  style="
+                    background:#ffffff;
+                    border:1px solid #fcd34d;
+                    border-radius:6px;
+                  "
+                >
+                  <tr>
+                    <td style="
+                      width:4px;
+                      background:#D4A017;
+                    "></td>
+
+                    <td style="
+                      padding:12px 14px;
+                    ">
+                      <p style="
+                        margin:0 0 4px;
+                        font-size:12px;
+                        color:#111827;
+                        font-weight:700;
+                      ">
+                        Reposição do material correto
+                      </p>
+
+                      <p style="
+                        margin:0;
+                        font-size:11px;
+                        color:#6b7280;
+                        line-height:1.5;
+                      ">
+                        Em substituição ao item divergente.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- ITEM -->
+            <tr>
+              <td style="
+                padding:0 0 10px 0;
+              ">
+                <table
+                  role="presentation"
+                  width="100%"
+                  cellpadding="0"
+                  cellspacing="0"
+                  style="
+                    background:#ffffff;
+                    border:1px solid #fcd34d;
+                    border-radius:6px;
+                  "
+                >
+                  <tr>
+                    <td style="
+                      width:4px;
+                      background:#D4A017;
+                    "></td>
+
+                    <td style="
+                      padding:12px 14px;
+                    ">
+                      <p style="
+                        margin:0 0 4px;
+                        font-size:12px;
+                        color:#111827;
+                        font-weight:700;
+                      ">
+                        Devolução do material com divergência
+                      </p>
+
+                      <p style="
+                        margin:0;
+                        font-size:11px;
+                        color:#6b7280;
+                        line-height:1.5;
+                      ">
+                        Para regularização do processo.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- ITEM -->
+            <tr>
+              <td style="
+                padding:0 0 10px 0;
+              ">
+                <table
+                  role="presentation"
+                  width="100%"
+                  cellpadding="0"
+                  cellspacing="0"
+                  style="
+                    background:#ffffff;
+                    border:1px solid #fcd34d;
+                    border-radius:6px;
+                  "
+                >
+                  <tr>
+                    <td style="
+                      width:4px;
+                      background:#D4A017;
+                    "></td>
+
+                    <td style="
+                      padding:12px 14px;
+                    ">
+                      <p style="
+                        margin:0 0 4px;
+                        font-size:12px;
+                        color:#111827;
+                        font-weight:700;
+                      ">
+                        Emissão de nota de crédito
+                      </p>
+
+                      <p style="
+                        margin:0;
+                        font-size:11px;
+                        color:#6b7280;
+                        line-height:1.5;
+                      ">
+                        Quando aplicável.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- ITEM -->
+            <tr>
+              <td>
+                <table
+                  role="presentation"
+                  width="100%"
+                  cellpadding="0"
+                  cellspacing="0"
+                  style="
+                    background:#ffffff;
+                    border:1px solid #fcd34d;
+                    border-radius:6px;
+                  "
+                >
+                  <tr>
+                    <td style="
+                      width:4px;
+                      background:#D4A017;
+                    "></td>
+
+                    <td style="
+                      padding:12px 14px;
+                    ">
+                      <p style="
+                        margin:0 0 4px;
+                        font-size:12px;
+                        color:#111827;
+                        font-weight:700;
+                      ">
+                        Ajuste contábil
+                      </p>
+
+                      <p style="
+                        margin:0;
+                        font-size:11px;
+                        color:#6b7280;
+                        line-height:1.5;
+                      ">
+                        Caso necessário.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+          </table>
+
+          <!-- PRAZO -->
+          <div style="
+            border-top:1px solid #fde68a;
+            padding-top:14px;
+          ">
+
+            <p style="
+              margin:0 0 10px;
+              font-size:12px;
+              color:#374151;
+              line-height:1.6;
+            ">
+              Pedimos que o posicionamento seja enviado dentro do prazo estabelecido,
+              conforme a complexidade do caso.
+            </p>
+
+            <p style="
+              margin:0;
+              font-size:12px;
+              color:#374151;
+              line-height:1.6;
+            ">
+              Toda a tratativa deverá ser respondida diretamente a este e-mail,
+              mantendo o número do protocolo no assunto,
+              para garantir o correto acompanhamento do processo.
+            </p>
+
+          </div>
+
+        </td>
+      </tr>
     </table>
-  </td></tr>
+  </td>
+</tr>
 
   <!-- PRAZOS -->
   <tr><td style="padding:14px 28px 0;">

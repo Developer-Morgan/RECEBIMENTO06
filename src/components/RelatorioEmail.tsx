@@ -208,6 +208,19 @@ function gerarHTMLRelatorio(o: Ocorrencia, f?: Fornecedor): string {
           </td>
         </tr>
 
+      </table>
+
+      <p style="margin:0 0 10px;font-size:12px;color:#374151;line-height:1.7;">
+        Pedimos que o posicionamento seja enviado dentro do prazo estabelecido, conforme a complexidade do caso.
+      </p>
+
+      <p style="margin:0;font-size:12px;color:#374151;line-height:1.7;">
+        Toda a tratativa deverá ser respondida diretamente a este e-mail, mantendo o número do protocolo no assunto, para garantir o correto acompanhamento do processo.
+      </p>
+
+    </td></tr>
+  </table>
+</td></tr>
         </p>
       </td></tr>
     </table>

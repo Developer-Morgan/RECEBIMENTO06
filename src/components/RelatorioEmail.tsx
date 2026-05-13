@@ -80,7 +80,7 @@ function gerarHTMLRelatorio(o: Ocorrencia, f?: Fornecedor): string {
   <tr><td style="background:#fffbeb;border-bottom:1px solid #fde68a;padding:12px 28px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
       <tr>
-        <td style="font-size:11px;color:#92400e;text-transform:uppercase;letter-spacing:0.6px;font-weight:700;">Protocolo N° </td>
+        <td style="font-size:11px;color:#92400e;text-transform:uppercase;letter-spacing:0.6px;font-weight:700;">Protocolo Oficial</td>
         <td style="text-align:right;font-size:14px;color:#1a1a1a;font-family:'Courier New',monospace;font-weight:800;letter-spacing:0.5px;">${o.protocolo}</td>
       </tr>
     </table>
@@ -90,7 +90,8 @@ function gerarHTMLRelatorio(o: Ocorrencia, f?: Fornecedor): string {
   <tr><td style="padding:22px 28px 6px;">
     <p style="margin:0 0 10px;font-size:13px;color:#111827;">Prezado(a) <strong>${o.fornecedorNome || "fornecedor"}</strong>,</p>
     <p style="margin:0;font-size:13px;color:#374151;line-height:1.6;">
-      Comunicamos  a abertura do Registro de Não Conformidade <strong>${o.protocolo}</strong>, identificado durante o processo de conferência do recebimento referente à Nota Fiscal nº <strong>${o.notaFiscal || "—"}</strong>.
+      Comunicamos formalmente a abertura do Registro de Não Conformidade <strong>${o.protocolo}</strong>, identificado durante o processo de conferência do recebimento referente à Nota Fiscal nº <strong>${o.notaFiscal || "—"}</strong>.
+      Solicitamos a análise das informações abaixo e o devido posicionamento, conforme nosso procedimento interno de tratamento de não conformidades.
     </p>
   </td></tr>
 
@@ -119,7 +120,6 @@ function gerarHTMLRelatorio(o: Ocorrencia, f?: Fornecedor): string {
       </tr>
     </table>
   </td></tr>
-
 
   <!-- INFORMAÇÕES -->
   <tr><td style="padding:18px 28px 0;">
@@ -200,52 +200,26 @@ function gerarHTMLRelatorio(o: Ocorrencia, f?: Fornecedor): string {
     </table>
   </td></tr>
 
- {/* AÇÃO REQUERIDA */}
-<tr><td style="padding:14px 28px 0;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fffbeb;border:1px solid #fde68a;border-left:4px solid #D4A017;border-radius:8px;">
-    <tr><td style="padding:16px 18px;">
+  <!-- AÇÃO REQUERIDA -->
+  <tr><td style="padding:14px 28px 0;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fffbeb;border:1px solid #fde68a;border-left:4px solid #D4A017;border-radius:8px;">
+      <tr><td style="padding:16px 18px;">
+        <p style="margin:0 0 6px;font-size:12px;color:#92400e;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;">⚠ Ação Requerida</p>
+        <p style="margin:0;font-size:12px;color:#374151;line-height:1.6;">
+         Solicitamos o retorno com o plano de ação para tratativa da divergência identificada, podendo contemplar uma das seguintes alternativas de solução:
 
-      <p style="margin:0 0 8px;font-size:12px;color:#92400e;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;">
-        ⚠ Ação Requerida
-      </p>
+* **Reposição do material correto**, em substituição ao item divergente;
+* **Devolução do material com divergência**, para regularização do processo;
+* **Emissão de nota de crédito**, quando aplicável;
+* **Ajuste contábil**, caso necessário.
 
-      <p style="margin:0 0 12px;font-size:12px;color:#374151;line-height:1.7;">
-        Solicitamos o retorno com o plano de ação para tratativa da divergência identificada, podendo contemplar uma das seguintes alternativas de solução:
-      </p>
+* **Reposição do material correto**, em substituição ao item divergente.
+* **Devolução do material com divergência**, para regularização do processo.
+* **Emissão de nota de crédito**, quando aplicável.
+Pedimos que o posicionamento seja enviado dentro do prazo estabelecido, conforme a complexidade do caso.
 
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:10px 0 14px;border-collapse:collapse;">
+Toda a tratativa deverá ser respondida diretamente a este e-mail, mantendo o número do protocolo no assunto, para garantir o correto acompanhamento do processo.
 
-        <tr>
-          <td style="padding:10px 12px;border:1px solid #fde68a;border-left:4px solid #D4A017;background:#ffffff;font-size:12px;color:#111827;border-radius:6px;">
-            <strong style="color:#92400e;">Reposição do material correto</strong><br/>
-            Em substituição ao item divergente.
-          </td>
-        </tr>
-
-        <tr>
-          <td style="height:8px;"></td>
-        </tr>
-
-        <tr>
-          <td style="padding:10px 12px;border:1px solid #fde68a;border-left:4px solid #D4A017;background:#ffffff;font-size:12px;color:#111827;border-radius:6px;">
-            <strong style="color:#92400e;">Devolução do material com divergência</strong><br/>
-            Para regularização do processo.
-          </td>
-        </tr>
-
-      </table>
-
-      <p style="margin:0 0 10px;font-size:12px;color:#374151;line-height:1.7;">
-        Pedimos que o posicionamento seja enviado dentro do prazo estabelecido, conforme a complexidade do caso.
-      </p>
-
-      <p style="margin:0;font-size:12px;color:#374151;line-height:1.7;">
-        Toda a tratativa deverá ser respondida diretamente a este e-mail, mantendo o número do protocolo no assunto, para garantir o correto acompanhamento do processo.
-      </p>
-
-    </td></tr>
-  </table>
-</td></tr>
         </p>
       </td></tr>
     </table>

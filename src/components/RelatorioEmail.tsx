@@ -81,8 +81,7 @@ function gerarHTMLRelatorio(o: Ocorrencia, f?: Fornecedor): string {
   const acoes = [
     { titulo: "Reposição do material correto", desc: "Em substituição ao item divergente." },
     { titulo: "Devolução do material com divergência", desc: "Para regularização do processo." },
-    { titulo: "Emissão de nota de crédito", desc: "Quando aplicável." },
-    { titulo: "Ajuste contábil", desc: "Caso necessário." },
+    { titulo: "Devolução de Material em Excesso", desc: "Quando aplicável." },
   ];
   const acoesHtml = acoes
     .map(
@@ -127,7 +126,7 @@ function gerarHTMLRelatorio(o: Ocorrencia, f?: Fornecedor): string {
       <tr>
         <td style="background:#fff8e1;border-top:2px solid #D4A017;border-bottom:2px solid #D4A017;padding:10px 24px;">
           <table width="100%"><tr>
-            <td style="font-size:11px;font-weight:700;color:#8a6d1f;letter-spacing:0.5px;">PROTOCOLO OFICIAL</td>
+            <td style="font-size:11px;font-weight:700;color:#8a6d1f;letter-spacing:0.5px;">PROTOCOLO N° </td>
             <td align="right" style="font-size:13px;font-weight:700;color:#1a1a1a;">${escapeHtml(o.protocolo)}</td>
           </tr></table>
         </td>
@@ -138,7 +137,7 @@ function gerarHTMLRelatorio(o: Ocorrencia, f?: Fornecedor): string {
         <td style="padding:20px 24px 8px;">
           <div style="font-size:13px;color:#1a1a1a;margin-bottom:8px;">Prezado(a) <strong>${escapeHtml(o.fornecedorNome) || "fornecedor"}</strong>,</div>
           <div style="font-size:13px;color:#444;line-height:1.6;">
-            Comunicamos formalmente a abertura do Registro de Não Conformidade <strong>${escapeHtml(o.protocolo)}</strong>, identificado durante o processo de conferência do recebimento referente à Nota Fiscal nº <strong>${escapeHtml(o.notaFiscal) || "—"}</strong>. Solicitamos a análise das informações abaixo e o devido posicionamento, conforme nosso procedimento interno de tratamento de não conformidades.
+            Comunicamos a abertura do Registro de Não Conformidade <strong>${escapeHtml(o.protocolo)}</strong>, identificado durante o processo de conferência do recebimento referente à Nota Fiscal nº <strong>${escapeHtml(o.notaFiscal) || "—"}</strong>. Solicitamos a análise das informações abaixo e o devido posicionamento, conforme nosso procedimento interno de tratamento de não conformidades.
           </div>
         </td>
       </tr>

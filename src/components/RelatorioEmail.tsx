@@ -18,7 +18,7 @@ function escapeHtml(s: string | undefined | null): string {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 }
-
+ 
 function gerarHTMLRelatorio(o: Ocorrencia, f?: Fornecedor): string {
   const cfg = loadConfig();
   const dataFormatada = new Date(o.dataCriacao).toLocaleDateString("pt-BR");

@@ -9,11 +9,10 @@ interface ResolverDialogProps {
 
 const SUGESTOES = [
   "Material substituído pelo fornecedor sem custo adicional, conforme acordo.",
-  "Fornecedor emitiu nota fiscal de devolução e crédito foi confirmado.",
+  "Emitiu nota fiscal de devolução e crédito foi confirmado.",
   "Diferença de quantidade complementada em entrega adicional realizada pelo fornecedor.",
-  "Material reaproveitado internamente após avaliação técnica favorável.",
+  "Material reaproveitado internamente.",
   "Devolução total realizada e confirmada com o fornecedor.",
-  "Fornecedor emitiu nota de ajuste e regularização contábil concluída.",
 ];
 
 export function ResolverDialog({ ocorrencia, onConfirm, onClose }: ResolverDialogProps) {

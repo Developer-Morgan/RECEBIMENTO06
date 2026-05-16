@@ -1,4 +1,3 @@
-```tsx
 import { Ocorrencia, Fornecedor, Material, loadConfig } from "@/lib/rnc-types";
 import { toast } from "sonner";
 
@@ -437,4 +436,3 @@ export function RelatorioEmail({ ocorrencia, fornecedor, onClose, onSent }: Rela
     </div>
   );
 }
-```
